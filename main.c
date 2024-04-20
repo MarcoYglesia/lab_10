@@ -56,15 +56,25 @@ void insert(struct Trie *pTrie, char *word)
     insertRec(pTrie, word, 0, strlen(word));
 }
 
-int numberOfOccurances(struct Trie *pTrie, char *word)
+int numberOfOccurances(char *array[], int size, char *word)
 {
-   int len = strlen(word);
-   int count = 0;
-   
-   return len;
+    int count = 0;
+
+    for (int i = 0; i < size; i++) {
+        // If the current element matches the target, increment count
+        if (strcmp(array[i], word) == 0) {
+            count++;
+        }
+    }
+    return count;
 }
 
-
+void printWords(char **array, int size) {
+    printf("Words in the array:\n");
+    for (int i = 0; i < size; i++) {
+        printf("%s\n", array[i]);
+    }
+}
 // Deallocate the trie structure
 // Deallocates memory for a given trie
 struct Trie *deallocateTrie(struct Trie *pTrie)
@@ -121,6 +131,7 @@ int main(void)
     {
         printf("%s\n", inWords[i]);
     }
+    printf("\n\n\n");
 
     struct Trie *pTrie = createTrie();
     for (int i=0;i<numWords;i++)
@@ -131,7 +142,7 @@ int main(void)
     char *pWords[] = {"notaword", "ucf", "no", "note", "corg"};
     for (int i=0;i<5;i++)
     {
-        printf("\t%s : %d\n", pWords[i], numberOfOccurances(pTrie, pWords[i]));
+        printf("\t%s : %d\n", pWords[i], numberOfOccurances(inWords, numWords, pWords[i]));
     }
     pTrie = deallocateTrie(pTrie);
     if (pTrie != NULL)
